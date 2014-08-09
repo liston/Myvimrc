@@ -1,0 +1,63 @@
+set nocompatible
+set t_Co=256
+set background=dark
+set noshowmode
+call pathogen#infect()
+call pathogen#incubate()
+syntax on
+filetype plugin indent on
+colorscheme peaksea
+set number
+autocmd filetype python set expandtab shiftwidth=4 tabstop=4 softtabstop=4
+set list
+set listchars=eol:$,tab:>-
+set encoding=utf-8
+hi SpecialKey ctermfg=66 guifg=#649A9A
+hi NonText ctermfg=62 guifg=#5f5fd7
+set spell
+set spelllang=en_gb
+
+set pastetoggle=<F3>
+set autochdir
+set laststatus=2
+"Reread Vimrc after making changes
+autocmd BufWritePost .vimrc source %
+
+let mapleader = ","
+"Fast Save
+nmap <leader>w :w!<cr>
+
+" Useful mappings for managing tabs/buffers
+"
+" New Tab
+"map <C-l> :tabn<cr>
+"Previous Buffer
+nnoremap <C-h> :bprevious<cr>
+"Next Buffer
+nnoremap <C-n> :bnext<cr>
+nnoremap <C-r> :bd<cr>
+
+map <leader>nt :NERDTreeToggle<cr>
+map <leader>pt :pastetoggle
+map <leader>e :e.<cr>
+map <leader>q :q<cr>
+
+" Return to last edit position when opening files (You want this!)
+autocmd BufReadPost *
+      \ if line("'\"") > 0 && line("'\"") <= line("$") |
+     \   exe "normal! g`\"" |
+     \ endif
+
+
+" Delete trailing white space on save, useful for Python and
+func! DeleteTrailingWS()
+   exe "normal mz"
+     %s/\s\+$//ge
+       exe "normal `z"
+       endfunc
+autocmd BufWrite *.py :call DeleteTrailingWS()
+"
+"Airline settings
+let g:airline_section_b = '%{getcwd()}'
+let g:airline_section_c = '%t'
+let g:airline#extensions#tabline#enabled = 1
